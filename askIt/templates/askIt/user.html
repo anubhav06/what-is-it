@@ -1,0 +1,56 @@
+{% extends "askIt/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    Ask anything from {{user.username}} anonymously! <br>
+    <div class="box">
+        <form action="{% url 'user' user.username %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <h4> Ask Anything </h4>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Ask a question here" name="userQuestion" required></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit"> Ask </button>
+            </div>
+        </form>
+    </div>
+
+
+    All the questions answered by {{user.username}} will show here: <br>
+
+    {% if questions %}
+        {% for question in questions %}
+            <div class="box">
+                <div class="question" id = "question{{question.id}}">
+                    {{question.content}} <br>
+                    {{question.timestamp}} <br>
+        
+                    {% if question.poster == None %}
+                        {{question.randomPoster}} <br>
+                    {% else %}
+                        {{question.poster}} <br>
+                    {% endif %}
+                </div>
+
+                <div>
+                    {% if answers %}
+                        {% for answer in answers %}
+                            {% if answer.question == question %}
+                                {{answer.content}} <br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        -- {{user.username}} has not answered any questions yet!
+    {% endif %}
+   
+
+{% endblock %}
+

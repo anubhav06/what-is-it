@@ -17,6 +17,8 @@ class Questions(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
     poster = models.ForeignKey(User, on_delete=models.CASCADE, related_name="poster", null=True, default=None)
     randomPoster = models.CharField(max_length=64, null=True, default=None)
+    askedFor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="askedFor", null=True, default=None)
+    answered = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Question: {self.poster}: {self.content}"

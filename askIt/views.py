@@ -1,10 +1,12 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from django.db.utils import Error
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Answers, User, Questions
 
@@ -40,7 +42,7 @@ def index(request):
         return HttpResponseRedirect(reverse("index"))
 
     else:
-        questions = Questions.objects.all()
+        questions = Questions.objects.filter(askedFor = None)
         answers = Answers.objects.all()
 
         return render(request, "askIt/index.html", {
@@ -100,3 +102,73 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "askIt/register.html")
+
+
+def user(request, name):
+
+    if request.method == "POST":
+        userQuestion = request.POST["userQuestion"]
+        if userQuestion.isspace() or userQuestion == "":
+            return HttpResponse('Your question cannot be empty !')
+
+        askedFor = User.objects.get(username = name)
+
+        questions = Questions(content= request.POST["userQuestion"], randomPoster = "Anonymous", askedFor = askedFor)
+        questions.save()
+
+        return HttpResponseRedirect(reverse('user', args=(name,)))
+
+    else:
+
+        try:
+            user = User.objects.get(username = name)
+        except ObjectDoesNotExist:
+            user = None
+            return HttpResponse('No user exists with that name!')
+
+        questions = Questions.objects.filter(askedFor = user )
+        answers = Answers.objects.all()
+
+        return render(request, "askIt/user.html", {
+            "questions" : questions,
+            "user" : user,
+            "answers" : answers,
+        })
+
+
+def access(request, name):
+
+    if request.method == "POST":
+        answerContent = request.POST["answerContent"]
+        if answerContent.isspace() or answerContent == "":
+            return HttpResponse('Your answer cannot be empty!')
+
+        questionId = request.POST["question-id"]
+        questions = Questions.objects.get(id = questionId)
+
+        answers = Answers(question= questions ,content=answerContent, randomPoster = "Anonymous")
+        answers.save()
+        Questions.objects.filter(id = questionId).update(answered = True)
+        return HttpResponseRedirect(reverse('access', args=(name,)))
+
+    else:
+
+        try:
+            user = User.objects.get(username = name)
+        except ObjectDoesNotExist:
+            user = None
+            return HttpResponse('No user exists with that name!')
+
+        if request.user != user:
+            print(request.user)
+            print(user)
+            return HttpResponse("You need to be logged in as that user to access!")
+
+        questions = Questions.objects.filter(askedFor = user, answered = False)
+        answers = Answers.objects.all()
+
+        return render(request, "askIt/access.html", {
+            "questions" : questions,
+            "user" : user,
+            "answers" : answers,
+        })
