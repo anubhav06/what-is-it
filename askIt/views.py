@@ -6,13 +6,47 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User
+from .models import Answers, User, Questions
 
 # Create your views here.
 
 
 def index(request):
-    return render(request, "askIt/index.html")
+    
+    if request.method == "POST":
+
+        if request.user is None:
+            return HttpResponse('User not logged in !')
+        
+        if request.POST.get("content"):
+            content = request.POST["content"]
+            if content.isspace() or content == "":
+                return HttpResponse('You cannot ask an empty question !')
+
+            questions = Questions(content= request.POST["content"], randomPoster = "Anonymous")
+            questions.save()
+        
+        else:
+            answerContent = request.POST["answerContent"]
+            if answerContent.isspace() or answerContent == "":
+                return HttpResponse('Your answer cannot be empty!')
+
+            questionId = request.POST["question-id"]
+            questions = Questions.objects.get(id = questionId)
+
+            answers = Answers(question= questions ,content=answerContent, randomPoster = "Anonymous")
+            answers.save()
+
+        return HttpResponseRedirect(reverse("index"))
+
+    else:
+        questions = Questions.objects.all()
+        answers = Answers.objects.all()
+
+        return render(request, "askIt/index.html", {
+            "questions" : questions,
+            "answers" : answers,
+        })
 
 
 
