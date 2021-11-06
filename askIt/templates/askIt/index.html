@@ -32,6 +32,13 @@
                 <button class="btn btn-info" onclick="window.location.href='login'; "> Login for personalized questions </button>
             {% endif %}
         </div>
+        <div class="blink">
+            <span>
+                EASTER EGG: There is a secret hidden on this website.<br>
+                HINT: Search at the 'root' of the webpage
+            </span>
+        </div>
+
     </div>
 
     <div class="section-2" id="section-2">
@@ -72,15 +79,14 @@
                     <form action="{% url 'index' %}" method="POST" id="answer-form">
                         {% csrf_token %}
                         <div class="form-group">
-                            <h6> Answer Question </h6>
-                            <h8> {{question.content}} </h8>
+                            <h4> Answer Question </h4>
                         </div>
 
                         <!-- Pass the question id -->
                         <input class="question-id" name="question-id" type="hidden" value="{{question.id}}">
 
                         <div class="form-group">
-                            <textarea class="answer-content form-control" id="answer-content{{question.id}}" name="answerContent" required></textarea>
+                            <textarea class="answer-content form-control" id="answer-content{{question.id}}" name="answerContent" rows="10" required>  </textarea>
                         </div>
                         <div class="form-group">
                             <input class="answer-form-submit btn btn-primary" id="answer-form-submit{{question.id}}"  type="submit" value="Answer"/> 
