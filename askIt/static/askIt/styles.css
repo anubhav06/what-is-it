@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     /*margin: 10px;*/
     /*overflow: hidden;*/
@@ -9,11 +13,7 @@ body{
 }
   
 
-.box{
-    border: 0.2px solid rgba(192, 192, 192, 0.5); /* Silver with opacity 0.5 */
-    margin: 0vh 0vh 2vh 0vh;
-    padding: 2vh;
-}
+
 
 /* Login/Register Page */
 .mainPage-left {
@@ -114,4 +114,64 @@ body{
       display: block;
       text-align: left;
     }
+}
+
+
+#section-1{
+    height: 700px;
+    text-align: center;
+}
+
+
+textarea{
+    padding: 10px;
+}
+.footer{
+    text-align: center;
+    font-size: 5px;
+}
+
+.name{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.timestamp{
+    color: darkgreen;
+}
+
+.content{
+    font-size: 24px;
+}
+
+.ans-btn{
+    margin-top: 20px;
+}
+
+#section-2{
+    margin-left: 200px;
+    margin-right: auto;
+}
+
+.box{
+    border: 0.2px solid rgba(192, 192, 192, 0.5); /* Silver with opacity 0.5 */
+    padding: 2vh;
+    width: 1000px;
+    padding: 50px;
+    margin-left: 50px ;
+    margin-top: 20px;
+}
+
+.answer-box{
+    border: 0.2px solid rgba(192, 192, 192, 0.5); /* Silver with opacity 0.5 */
+    padding: 2vh 5vh 2vh 5vh;
+    width: 1000px;
+    margin-left: 50px ;
+    background-color: lightgray;
+    font-size: 18px;
+}
+
+.answered-by{
+    font-size: 12px;
+    margin-top: 5px;
 }

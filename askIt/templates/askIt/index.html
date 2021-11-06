@@ -3,74 +3,103 @@
 
 {% block body %}
 
-
-    <br><br><br> Ask any question to the community anonymously without disclosing who you are! <br><br><br>
-    <div class="box">
-        <form action="{% url 'index' %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <h4> Ask Anything </h4>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Ask a question here" name="content" required></textarea>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit"> Ask </button>
-            </div>
-        </form>
+    <div class="section-1" id="section-1">
+        <br><br><br> Ask/Answer a question to the community anonymously without disclosing who you are! <br><br><br>
+        <div>
+            <form action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h4> Ask Anything </h4>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Ask a question here" name="content" rows="4" cols="70" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit"> Ask </button>
+                </div>
+            </form> <br><br>
+        </div>
+        <div>
+            To let people ask you questions anonymously, please login (it's FREE). <br>
+            All the questions answered will show on your main profile. <br><br>
+        </div>
+        <div>
+            <button class="btn btn-info" onclick="window.location.href ='#section-2';"> See questions </button>
+            {% if user.is_authenticated %}
+                <button class="btn btn-info" onclick="window.location.href='{{user.username}}'"> Your public profile </button>
+                <button class="btn btn-info" onclick="window.location.href='{{user.username}}/access'"> Your private dashboard </button>
+            {% else %}
+                <button class="btn btn-info" onclick="window.location.href='login'; "> Login for personalized questions </button>
+            {% endif %}
+        </div>
     </div>
-    <br> To let people ask you questions anonymously, please login (it's FREE) <br><br><br><br><br><br><br><br><br><br><br><br>
 
-    {% for question in questions %}
+    <div class="section-2" id="section-2">
 
-        <div class="box">
-            <div class="question" id = "question{{question.id}}">
-                {{question.content}} <br>
-                {{question.timestamp}} <br>
-    
-                {% if question.poster == None %}
-                    {{question.randomPoster}} <br>
-                {% else %}
-                    {{question.poster}} <br>
-                {% endif %}
-                <button class="answer-btn" id="answer-btn{{question.id}}" > Answer </button>
+
+        {% for question in questions %}
+
+            <div class="box">
+                <div class="question" id = "question{{question.id}}">
+
+                    <div class="name" style="display: inline;"> {{question.randomPoster}} </div>
+                    <div class="timestamp" style="display: inline;"> {{question.timestamp}}  </div>
+
+                    <div class="content">
+                        Q: {{question.content}} <br>
+                    </div>
+
+                    <div class="ans-btn">
+                        <button class="btn btn-secondary" id="answer-btn{{question.id}}" > Answer </button>
+                    </div>
+                </div>
             </div>
-
             <div>
                 {% if answers %}
                     {% for answer in answers %}
                         {% if answer.question == question %}
+                        <div class="answer-box">
                             {{answer.content}} <br>
+                            <div class="answered-by"> Answered by {{answer.randomPoster}} on {{answer.timestamp}} </div>
+                        </div>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>
+            <div>
 
-            <div class="answerQuestion" id="answerQuestion{{question.id}}" style="display: none;">
-                <form action="{% url 'index' %}" method="POST" id="answer-form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <h6> Answer Question </h6>
-                        <h8> {{question.content}} </h8>
-                    </div>
+                <div class="answerQuestion" id="answerQuestion{{question.id}}" style="display: none;">
+                    <form action="{% url 'index' %}" method="POST" id="answer-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <h6> Answer Question </h6>
+                            <h8> {{question.content}} </h8>
+                        </div>
 
-                    <!-- Pass the question id -->
-                    <input class="question-id" name="question-id" type="hidden" value="{{question.id}}">
+                        <!-- Pass the question id -->
+                        <input class="question-id" name="question-id" type="hidden" value="{{question.id}}">
 
-                    <div class="form-group">
-                        <textarea class="answer-content form-control" id="answer-content{{question.id}}" name="answerContent" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input class="answer-form-submit btn btn-primary" id="answer-form-submit{{question.id}}"  type="submit" value="Answer"/> 
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <textarea class="answer-content form-control" id="answer-content{{question.id}}" name="answerContent" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="answer-form-submit btn btn-primary" id="answer-form-submit{{question.id}}"  type="submit" value="Answer"/> 
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
-    {% endfor %}
+        {% endfor %}
 
+    </div>
 {% endblock %}
 
+
+{% block footer %}
+    <div class="footer">
+        ATTENTION! We occasionally randomly chose people who can view the actuall users name, and it's you! Click here
+    </div>
+{% endblock %}
 
 {% block script %}
     <script src="{% static 'askIt/main.js' %}" ></script>
