@@ -246,3 +246,22 @@ span{
     text-decoration: underline;
     color: darkgreen
 }
+
+.list{
+    font-size: 20px;
+}
+
+.link{
+    width: 500px;
+    height: 50px;
+    background-color: darkgrey;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.linkColor{
+    color: inherit;
+}

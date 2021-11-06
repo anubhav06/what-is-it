@@ -146,7 +146,7 @@ def access(request, name):
         questionId = request.POST["question-id"]
         questions = Questions.objects.get(id = questionId)
 
-        answers = Answers(question= questions ,content=answerContent, randomPoster = "Anonymous")
+        answers = Answers(question= questions ,content=answerContent, answerPoster = request.user)
         answers.save()
         Questions.objects.filter(id = questionId).update(answered = True)
         return HttpResponseRedirect(reverse('access', args=(name,)))
@@ -164,7 +164,7 @@ def access(request, name):
             print(user)
             return HttpResponse("You need to be logged in as that user to access!")
 
-        questions = Questions.objects.filter(askedFor = user, answered = False)
+        questions = Questions.objects.filter(askedFor = user, answered = False).order_by('-id')
         answers = Answers.objects.all()
 
         return render(request, "askIt/access.html", {
