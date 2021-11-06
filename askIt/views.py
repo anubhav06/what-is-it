@@ -126,8 +126,8 @@ def user(request, name):
             user = None
             return HttpResponse('No user exists with that name!')
 
-        questions = Questions.objects.filter(askedFor = user )
         answers = Answers.objects.all()
+        questions = Questions.objects.filter(askedFor = user, id__in = answers.values_list('question', flat=True)).all()
 
         return render(request, "askIt/user.html", {
             "questions" : questions,

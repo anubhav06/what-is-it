@@ -151,6 +151,7 @@ textarea{
 #section-2{
     margin-left: 200px;
     margin-right: auto;
+    margin-bottom: 20px;
 }
 
 .box{
@@ -203,4 +204,45 @@ span{
     padding: 50px;
     margin-left: 50px ;
     margin-top: 20px;
+}
+
+.left{
+    width: 23%;
+    float: left;
+    padding: 15px;
+    margin-left: 100px;
+    margin-top: 50px;
+}
+
+.right{
+    width: 50%;
+    float: left;
+    padding: 15px;
+    margin-top: 50px;
+    margin-left: 250px;
+}
+
+.profilePic{
+    border: 5px solid grey;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.profileName{
+    font-weight: bold;
+    font-size: 24px;
+    width: 200px;
+    text-align: center;
+}
+
+.questionsHeader{
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: darkgreen
 }

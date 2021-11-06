@@ -3,53 +3,70 @@
 
 {% block body %}
 
-    Ask anything from {{user.username}} anonymously! <br>
-    <div class="box">
-        <form action="{% url 'user' user.username %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <h4> Ask Anything </h4>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Ask a question here" name="userQuestion" required></textarea>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit"> Ask </button>
-            </div>
-        </form>
+    <div class="row">
+        <div class="left">
+            <img src="{% static 'askIt/profilePic.png' %}" alt="Profile Picture" class="profilePic"> <br>
+            <div class="profileName"> {{user.username}} </div>
+            
+        </div>
+
+        <div class="right">
+            <form action="{% url 'user' user.username %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h4> Ask something from {{user.username}} anonymously </h4>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Ask a question here" name="userQuestion" rows="4" cols="70" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit"> Ask </button>
+                </div>
+            </form> <br><br>
+        </div>
+    </div>
+    
+    <div class="questionsHeader">
+        All the questions answered by {{user.username}} will show here :
     </div>
 
+    <div class="section-2" id="section-2">
 
-    All the questions answered by {{user.username}} will show here: <br>
+        {% if questions %}
 
-    {% if questions %}
-        {% for question in questions %}
-            <div class="box">
-                <div class="question" id = "question{{question.id}}">
-                    {{question.content}} <br>
-                    {{question.timestamp}} <br>
-        
-                    {% if question.poster == None %}
-                        {{question.randomPoster}} <br>
-                    {% else %}
-                        {{question.poster}} <br>
-                    {% endif %}
+            {% for question in questions %}
+
+                <div class="box">
+                    <div class="question" id = "question{{question.id}}">
+
+                        <div class="name" style="display: inline;"> {{question.randomPoster}} </div>
+                        <div class="timestamp" style="display: inline;"> {{question.timestamp}}  </div>
+
+                        <div class="content">
+                            Q: {{question.content}} <br>
+                        </div>
+
+                    </div>
                 </div>
-
                 <div>
                     {% if answers %}
                         {% for answer in answers %}
                             {% if answer.question == question %}
+                            <div class="answer-box">
                                 {{answer.content}} <br>
+                                <div class="answered-by"> Answered by {{answer.answerPoster}} on {{answer.timestamp}} </div>
+                            </div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        -- {{user.username}} has not answered any questions yet!
-    {% endif %}
+
+            {% endfor %}
+
+        {% else %}
+            <h4> No questions answered yet ! </h4>
+        {% endif %}
+    </div>
    
 
 {% endblock %}
