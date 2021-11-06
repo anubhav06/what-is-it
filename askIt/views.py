@@ -24,6 +24,9 @@ def index(request):
             content = request.POST["content"]
             if content.isspace() or content == "":
                 return HttpResponse('You cannot ask an empty question !')
+            if content.upper().strip() == "EASTER EGG":
+                return HttpResponseRedirect(reverse("secretSpy"))
+
 
             questions = Questions(content= request.POST["content"], randomPoster = "Anonymous")
             questions.save()
@@ -42,7 +45,7 @@ def index(request):
         return HttpResponseRedirect(reverse("index"))
 
     else:
-        questions = Questions.objects.filter(askedFor = None)
+        questions = Questions.objects.filter(askedFor = None).order_by('-id')
         answers = Answers.objects.all()
 
         return render(request, "askIt/index.html", {
@@ -172,3 +175,25 @@ def access(request, name):
             "user" : user,
             "answers" : answers,
         })
+
+
+def secretSpy(request):
+    return render(request, "askIt/secretSpy.html")
+
+def secretSpyOne(request):
+    return render(request, "askIt/secretSpyOne.html")
+
+def secretSpyTwo(request):
+    return render(request, "askIt/secretSpyTwo.html")
+    
+def secretSpyThree(request):
+    return render(request, "askIt/secretSpyThree.html")
+    
+def secretSpyThreeAlt(request):
+    return HttpResponseRedirect(reverse('secretSpyThree'))
+
+def secretSpyFour(request):
+    return render(request, "askIt/secretSpyFour.html")
+
+def secretSpyFinal(request):
+    return render(request, "askIt/secretSpyFinal.html")

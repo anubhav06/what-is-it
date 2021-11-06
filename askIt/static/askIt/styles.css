@@ -128,7 +128,8 @@ textarea{
 }
 .footer{
     text-align: center;
-    font-size: 5px;
+    font-size: 3px;
+    color: white;
 }
 
 .name{
@@ -186,7 +187,7 @@ textarea{
     line-height: 50px;
 }
 span{
-    font-size: 20px;
+    font-size: 18px;
     /*font-family: cursive;*/
     color: black;
     animation: blink 5s linear infinite;
@@ -264,4 +265,39 @@ span{
 
 .linkColor{
     color: inherit;
+}
+
+
+/* ----------------------- FOR SECRET HUNT --------------------------------- */
+
+.spyImage{
+    height: 700px;
+    width: auto;
+}
+
+.mainSpyPage{
+    background-color: black;
+    height: 5rem;
+    width: 5rem;
+}
+
+.spyPageLeft{
+    width: 35%;
+    float: left;
+    padding: 15px;
+}
+
+.spyPageRight{
+    width: 65%;
+    float: left;
+    padding: 15px;
+}
+
+.spyPageHeading{
+    color: yellow;
+}
+
+.spyPageContent{
+    color: white;
+    font-size: 20px;
 }

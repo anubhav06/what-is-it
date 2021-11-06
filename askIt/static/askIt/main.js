@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Loaded')
+
+    var spyImageOneCount = 0;
 
     document.addEventListener('click', event => {
 
         const element = event.target;
-        console.log("clicked")
         // Get the clicked element id and check if it contains `answer-btn`
         if(element.id.indexOf('answer-btn') > -1){
 
@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const id = element.id.split('answer-btn')[1]
             document.querySelector(`#answerQuestion${id}`).style.display = 'block'
         } 
+
+        if(element.id == "spyImageOne"){
+            spyImageOneCount += 1;
+        }
+
+        if(spyImageOneCount == 5){
+            document.querySelector('#hintOne').style.backgroundColor = "white";
+        }
 
     })
 
