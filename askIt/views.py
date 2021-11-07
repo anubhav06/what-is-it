@@ -138,7 +138,7 @@ def user(request, name):
             "answers" : answers,
         })
 
-
+@login_required(login_url="/login")  
 def access(request, name):
 
     if request.method == "POST":
@@ -176,24 +176,30 @@ def access(request, name):
             "answers" : answers,
         })
 
-
+@login_required(login_url="/login")  
 def secretSpy(request):
     return render(request, "askIt/secretSpy.html")
 
+@login_required(login_url="/login")  
 def secretSpyOne(request):
     return render(request, "askIt/secretSpyOne.html")
 
+@login_required(login_url="/login")  
 def secretSpyTwo(request):
     return render(request, "askIt/secretSpyTwo.html")
-    
+
+@login_required(login_url="/login")      
 def secretSpyThree(request):
     return render(request, "askIt/secretSpyThree.html")
-    
+
+@login_required(login_url="/login")  
 def secretSpyThreeAlt(request):
     return HttpResponseRedirect(reverse('secretSpyThree'))
 
+@login_required(login_url="/login")  
 def secretSpyFour(request):
     return render(request, "askIt/secretSpyFour.html")
 
+@login_required(login_url="/login")  
 def secretSpyFinal(request):
     return render(request, "askIt/secretSpyFinal.html")
