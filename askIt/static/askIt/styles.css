@@ -16,6 +16,18 @@ body{
 
 
 /* Login/Register Page */
+
+
+.login-bg{
+    margin-left: 500px;
+    margin-top: 100px;
+    padding: 50px;
+    width: 500px;
+    height: 500px;
+    background-color:lavender;
+    border-radius: 10%;
+}
+
 .mainPage-left {
     width: 50%;
     float: left;
@@ -28,9 +40,6 @@ body{
     padding: 15px;
     display: block;
     margin: auto;
-}
-.login-register{
-    width: 60%;
 }
 
 .row::after {
@@ -300,4 +309,83 @@ span{
 .spyPageContent{
     color: white;
     font-size: 20px;
+}
+
+/* LOGIN/REGISTER FORM */
+
+.form {
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    box-shadow: 0 6px rgba(62, 60, 73, 0.3);
+    width: 30%;
+    width: 400px;
+    margin: 40px auto;
+    text-align: center;
+    padding: 20px;
+  }
+  
+.form .error {
+    font-family: var(--poppins);
+    margin-bottom: 10px;
+    color: hsl(0, 100%, 74%);
+    font-size: 14px;
+}
+  
+.form > h2 {
+    font-family: var(--roboto);
+    margin-bottom: 25px;
+    margin-top: 20px;
+}
+  
+.form form div input {
+    font-family: var(--poppins);
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(62, 60, 73, 0.3);
+    font-weight: 600;
+}
+  
+.form form .btn {
+    margin: 20px;
+    color: white;
+    text-align: center;
+    letter-spacing: 1.2px;
+    background-color: hsl(154, 59%, 51%);
+    padding: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px rgba(41, 171, 114, 1);
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    width: 50%;
+}
+  
+.form form .btn:hover {
+    background-color: rgba(60, 205, 142, 0.6);
+}
+  
+.form p {
+    font-family: var(--poppins);
+    font-size: 14px;
+}
+  
+.form p > a {
+    font-weight: 500;
+    color: hsl(248, 32%, 49%);
+}
+  
+.form p > a:hover {
+    font-weight: 700;
+}
+  
+  
+/* media queries */
+@media only screen and (max-width: 425px) {
+    .form {
+      width: 320px;
+    }
+  
 }
